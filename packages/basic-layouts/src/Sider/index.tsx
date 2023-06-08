@@ -1,4 +1,9 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import {
+  LeftOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  RightOutlined,
+} from '@ant-design/icons';
 import { Layout, Menu, MenuProps } from 'antd';
 import React, { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -13,7 +18,7 @@ export interface SiderProps extends MenuProps {
 }
 
 const Sider = (props: SiderProps) => {
-  const { theme } = props
+  const { theme } = props;
   const location = useLocation();
   const {
     HandleMenu,
@@ -39,36 +44,73 @@ const Sider = (props: SiderProps) => {
   if (!items.length) {
     return <React.Fragment />;
   }
-  return (
-    <Layout.Sider
-      className="antdp-basic-layouts-sider"
-      collapsible
-      width={siderWidth}
-      collapsed={collapsed}
-      theme={theme}
-      onCollapse={(value) => {
-        setCollapsed(value);
-      }}
-      trigger={
-        <div className="antdp-basic-layouts-collapsed">{collapsedView}</div>
-      }
-    >
-      {!!ANTD_MENU_SLIDER && (
-        <div>
-          <Logo />
-        </div>
-      )}
-      <Menu
-        {...props}
-        selectedKeys={[location.pathname]}
-        defaultSelectedKeys={[location.pathname]}
-        defaultOpenKeys={[location.pathname]}
-        mode="inline"
+  if (true) {
+    return (
+      <Layout.Sider
+        // className="antdp-basic-layouts-sider"
+        width={siderWidth}
+        collapsed={collapsed}
         theme={theme}
-        items={items}
-        style={{ width: '100%' }}
-      />
-    </Layout.Sider>
-  );
+      >
+        <div
+          className="antdp-basic-layouts-sider-collapsed-button"
+          onClick={() => setCollapsed(!collapsed)}
+        >
+          {collapsed ? (
+            <RightOutlined style={{ width: '1em', height: '1em' }} />
+          ) : (
+            <LeftOutlined style={{ width: '1em', height: '1em' }} />
+          )}
+        </div>
+        {!!ANTD_MENU_SLIDER && (
+          <div>
+            <Logo />
+          </div>
+        )}
+        <Menu
+          {...props}
+          selectedKeys={[location.pathname]}
+          defaultSelectedKeys={[location.pathname]}
+          defaultOpenKeys={[location.pathname]}
+          mode="inline"
+          theme={theme}
+          items={items}
+          style={{ width: '100%' }}
+        />
+      </Layout.Sider>
+    );
+  } else {
+    return (
+      <Layout.Sider
+        className="antdp-basic-layouts-sider"
+        collapsible
+        width={siderWidth}
+        collapsed={collapsed}
+        theme={theme}
+        onCollapse={(value) => {
+          setCollapsed(value);
+        }}
+        trigger={
+          <div className="antdp-basic-layouts-collapsed">{collapsedView}</div>
+        }
+      >
+        {!!ANTD_MENU_SLIDER && (
+          <div>
+            <Logo />
+          </div>
+        )}
+        <Menu
+          {...props}
+          selectedKeys={[location.pathname]}
+          defaultSelectedKeys={[location.pathname]}
+          defaultOpenKeys={[location.pathname]}
+          mode="inline"
+          theme={theme}
+          items={items}
+          style={{ width: '100%' }}
+        />
+      </Layout.Sider>
+    );
+  }
 };
 export default Sider;
